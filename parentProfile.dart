@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:finalfrontproject/childProfileForParent.dart';
 import 'package:finalfrontproject/parentEdit.dart';
 import 'package:finalfrontproject/perantDash.dart';
 import 'package:finalfrontproject/profileOtherChild.dart';
@@ -329,7 +330,7 @@ class _parentProfileState extends State<parentProfile> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  profileOtherChild(
+                                                  childProfileForParent(
                                                 name: child['name'],
                                                 email: child['email'],
                                                 profilePicture:
