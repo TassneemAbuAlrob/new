@@ -5,6 +5,7 @@ import 'package:finalfrontproject/addChild.dart';
 import 'package:finalfrontproject/contactWithAdmin.dart';
 import 'package:finalfrontproject/parentProfile.dart';
 import 'package:finalfrontproject/services/user_services.dart';
+import 'package:finalfrontproject/showInterest.dart';
 import 'package:finalfrontproject/suggestion.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -52,6 +53,46 @@ class PerantDash extends StatefulWidget {
 class _PerantDashState extends State<PerantDash> {
   var height, width;
 
+  Future<void> openEmailInputDialog(BuildContext context) async {
+    String enteredEmail = '';
+
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Enter Child Email:'),
+          content: TextField(
+            onChanged: (value) {
+              enteredEmail = value;
+            },
+            decoration: InputDecoration(
+              hintText: 'Enter email',
+            ),
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                print('Entered email: $enteredEmail');
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ShowInterest(email: enteredEmail),
+                  ),
+                );
+              },
+              child: Text('Submit'),
+            ),
+            TextButton(
+              onPressed: () {},
+              child: Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -81,6 +122,11 @@ class _PerantDashState extends State<PerantDash> {
             builder: (context) => addChild(),
           ),
         );
+        break;
+
+      case 1:
+        openEmailInputDialog(context);
+
         break;
       case 3:
         Navigator.push(

@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         primaryColor: KPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: PerantDash(),
+      home: welcomeScreen(),
     );
   }
 }
