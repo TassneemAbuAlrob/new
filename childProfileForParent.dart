@@ -276,6 +276,171 @@ class _childProfileForParentState extends State<childProfileForParent> {
   Map<String, dynamic> userData = {};
   List<Map<String, dynamic>> posts = [];
 
+  //fetch likes
+  Future<void> showLikesDialog(String postId) async {
+    List<Map<String, dynamic>>? likes = await fetchLikes(postId);
+
+    TextStyle titleStyle = TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: MediaQuery.of(context).size.height * 0.4,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.pink),
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                image: AssetImage('images/cover.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: SingleChildScrollView(
+              child: Container(
+                margin: EdgeInsets.only(left: 25, top: 7),
+                child: likes!.isEmpty
+                    ? Text(
+                        '\n \t \t\t\t \t\t\t\t\t\t\t No one \n\n \t\t\t\t\thas liked this post yet!!',
+                        style: titleStyle,
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: likes.map((like) {
+                          return Column(
+                            children: [
+                              Text('👤 ${like['username']}'),
+                              SizedBox(height: 8),
+                            ],
+                          );
+                        }).toList(),
+                      ),
+              ),
+            ),
+          ),
+          title: Row(
+            children: [
+              Icon(Icons.favorite, color: Colors.red),
+              SizedBox(width: 4),
+              Text(
+                'Likes List:',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  //show comments
+  Future<void> showCommentsDialog(
+      String postId, Map<String, dynamic> post) async {
+    // Fetch comments for the selected post
+    final comments = await fetchComments(postId);
+
+    TextStyle titleStyle = TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: MediaQuery.of(context).size.height * 0.4,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.pink),
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                image: AssetImage('images/cover.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: SingleChildScrollView(
+              child: Container(
+                margin: EdgeInsets.only(left: 25, top: 7),
+                child: comments.isEmpty
+                    ? Text(
+                        '\n \t \t\t\t \t\t\t\t\t\t\t No comments \n\n \t\t\t\t\thave been posted for this post yet!!',
+                        style: titleStyle,
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: comments.map((comment) {
+                          return Column(
+                            children: [
+                              Text('👤 ${comment['username']}'),
+                              if (comment['commentType'] == 'text')
+                                Text(
+                                  comment['comment'],
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                )
+                              else if (comment['commentType'] == 'image')
+                                Container(
+                                  width: 150,
+                                  height: 150,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image:
+                                          FileImage(File(comment['comment'])),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              SizedBox(height: 8),
+                            ],
+                          );
+                        }).toList(),
+                      ),
+              ),
+            ),
+          ),
+          title: Row(
+            children: [
+              Icon(Icons.comment, color: Colors.blue),
+              SizedBox(width: 4),
+              Text(
+                'Comments List:',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -485,13 +650,6 @@ class _childProfileForParentState extends State<childProfileForParent> {
             ),
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.menu),
-            color: Color.fromARGB(255, 252, 50, 154),
-          ),
-        ],
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -617,130 +775,117 @@ class _childProfileForParentState extends State<childProfileForParent> {
                 height: 40,
               ),
               Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Color.fromARGB(255, 40, 40, 41),
-                    width: 2.0,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Color.fromARGB(255, 40, 40, 41),
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: posts.length,
-                  itemBuilder: (context, index) {
-                    final post = posts[index];
-                    print('Post: $post');
+                  child: SingleChildScrollView(
+                      child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: posts.length,
+                    itemBuilder: (context, index) {
+                      final post = posts[index];
+                      print('Post: $post');
 
-                    return Column(
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 8, // Takes 80% of the width
+                      return Row(
+                        children: [
+                          Expanded(
+                            flex: 8, // Takes 80% of the width
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                PostContainer(
+                                  post: post,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: InkWell(
+                              onTap: () {
+                                final postId = post['_id'];
+
+                                if (post['_id'] != null &&
+                                    post['_id'] is String) {
+                                  AwesomeDialog(
+                                    context: context,
+                                    dialogType: DialogType.WARNING,
+                                    animType: AnimType.BOTTOMSLIDE,
+                                    title: 'Confirm Deletion',
+                                    desc:
+                                        'Are you sure you want to delete this post?',
+                                    btnCancelOnPress: () {},
+                                    btnOkOnPress: () {
+                                      // Call the deletePost function if the user confirms
+                                      deletePost(postId).then((result) {
+                                        if (result == true) {
+                                          setState(() {
+                                            posts.removeAt(index);
+                                          });
+                                        }
+                                      });
+                                    },
+                                  )..show();
+                                } else {
+                                  print(
+                                      'Invalid or missing Post ID: ${post['_id']}');
+                                }
+                              },
+                              child: Icon(Icons.delete, color: Colors.grey),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: InkWell(
+                              onTap: () {
+                                showLikesDialog(post['_id']);
+                              },
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  PostContainer(
-                                    post: post,
+                                  Icon(Icons.favorite, color: Colors.red),
+                                  Text(
+                                    post['likeCount'] != null
+                                        ? post['likeCount'].toString()
+                                        : '0',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
                                   ),
                                 ],
                               ),
                             ),
-                            Expanded(
-                              flex: 1,
-                              child: InkWell(
-                                onTap: () {
-                                  final postId = post['_id'];
-
-                                  if (post['_id'] != null &&
-                                      post['_id'] is String) {
-                                    AwesomeDialog(
-                                      context: context,
-                                      dialogType: DialogType.WARNING,
-                                      animType: AnimType.BOTTOMSLIDE,
-                                      title: 'Confirm Deletion',
-                                      desc:
-                                          'Are you sure you want to delete this post?',
-                                      btnCancelOnPress: () {},
-                                      btnOkOnPress: () {
-                                        // Call the deletePost function if the user confirms
-                                        deletePost(postId).then((result) {
-                                          if (result == true) {
-                                            setState(() {
-                                              posts.removeAt(index);
-                                            });
-                                          }
-                                        });
-                                      },
-                                    )..show();
-                                  } else {
-                                    print(
-                                        'Invalid or missing Post ID: ${post['_id']}');
-                                  }
-                                },
-                                child: Icon(Icons.delete, color: Colors.grey),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: InkWell(
-                                onTap: () {
-                                  addLikeToPost(post['_id'], widget.email);
-                                },
-                                child: Column(
-                                  children: [
-                                    Icon(Icons.favorite, color: Colors.red),
-                                    Text(
-                                      post['likeCount'] != null
-                                          ? post['likeCount'].toString()
-                                          : '0',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14),
+                          ),
+                          Expanded(
+                            flex: 1, // Takes 10% of the width
+                            child: InkWell(
+                              onTap: () {
+                                showCommentsDialog(post['_id'], post);
+                              },
+                              child: Column(
+                                children: [
+                                  Icon(Icons.comment, color: Colors.blue),
+                                  Text(
+                                    post['commentCount'] != null
+                                        ? post['commentCount'].toString()
+                                        : '0',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
-                            Expanded(
-                              flex: 1,
-                              child: InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    isCommentSectionVisible = true;
-                                  });
-                                },
-                                child: Column(
-                                  children: [
-                                    Icon(Icons.comment, color: Colors.blue),
-                                    Text(
-                                      post['commentCount'] != null
-                                          ? post['commentCount'].toString()
-                                          : '0',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        // Display the comment section using Visibility widget
-                        Visibility(
-                          visible: isCommentSectionVisible,
-                          child: CommentSectionWidget(
-                              postId: post['_id'], email: widget.email),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
+                          )
+                        ],
+                      );
+                    },
+                  )))
             ],
           ),
         ),

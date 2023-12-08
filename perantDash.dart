@@ -84,7 +84,9 @@ class _PerantDashState extends State<PerantDash> {
               child: Text('Submit'),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
               child: Text('Cancel'),
             ),
           ],
