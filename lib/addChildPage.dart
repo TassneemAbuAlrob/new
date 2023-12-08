@@ -256,7 +256,7 @@ class _addChildPageState extends State<addChildPage> {
                 ],
               ),
             ),
-            SizedBox(width: 50),
+            SizedBox(width: 20),
             Expanded(
               flex: 7,
               child: addChild(),

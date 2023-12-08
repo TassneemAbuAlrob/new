@@ -1,12 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:webfront/mainParent.dart';
-import 'package:webfront/parentProfile.dart';
+import 'package:webfront/setInterst.dart';
 
 File? myfile;
 final TextEditingController fullNameController = TextEditingController();
@@ -37,7 +36,6 @@ class _addChildState extends State<addChild> {
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -46,7 +44,6 @@ class _addChildState extends State<addChild> {
           child: Column(
             children: [
               Container(
-                decoration: BoxDecoration(),
                 height: height * 0.23,
                 width: width,
                 child: Column(
@@ -54,29 +51,27 @@ class _addChildState extends State<addChild> {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        top: 35,
-                        left: 20,
-                        right: 20,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: 20,
+                        top: 100,
                         left: width * 0.2,
+                        right: 20,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
+                              IconButton(
+                                icon: Icon(Icons.arrow_back),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                color: Colors.grey,
+                              ),
                               SizedBox(
                                 width: 3,
                               ),
                               addIcon(),
-                              SizedBox(width: 10),
+                              SizedBox(width: 25),
                               Text(
                                 'Add Your Child',
                                 textAlign: TextAlign.center,
@@ -95,7 +90,6 @@ class _addChildState extends State<addChild> {
                               )
                             ],
                           ),
-                          SizedBox(height: 4),
                         ],
                       ),
                     ),
@@ -104,29 +98,14 @@ class _addChildState extends State<addChild> {
               ),
               SingleChildScrollView(
                 child: Container(
-                    width: width * 0.5,
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(229, 239, 240, 0.89),
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(180),
-                        // topRight: Radius.circular(35),
-                      ),
-                      border: Border.all(
-                        color: Color.fromARGB(255, 55, 164, 241),
-                        width: 2,
-                      ),
-                    ),
+                    width: width * 0.3,
                     child: Padding(
-                      padding: EdgeInsets.all(50.0),
+                      padding: EdgeInsets.only(left: 30, right: 30),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Center(
                             child: Container(
-                              decoration: BoxDecoration(
-                                color: Color.fromRGBO(229, 239, 240, 0.89),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -138,24 +117,18 @@ class _addChildState extends State<addChild> {
                                         child: CircleAvatar(
                                           radius: 74.0,
                                           backgroundColor: Colors.white,
-                                          // child: CircleAvatar(
-                                          //   radius: 60.0,
-                                          //   backgroundImage: myfile != null
-                                          //       ? FileImage(myfile!)
-                                          //       : profilePictureController
-                                          //               .text.isNotEmpty
-                                          //           ? NetworkImage(
-                                          //               profilePictureController
-                                          //                   .text)
-                                          //           : AssetImage(
-                                          //                   'images/background.gif')
-                                          //               as ImageProvider,
-                                          // ),
                                           child: CircleAvatar(
                                             radius: 60.0,
-                                            backgroundImage: AssetImage(
-                                                    'images/background.gif')
-                                                as ImageProvider,
+                                            // backgroundImage: myfile != null
+                                            //     ? FileImage(myfile!)
+                                            //     : profilePictureController
+                                            //             .text.isNotEmpty
+                                            //         ? NetworkImage(
+                                            //             profilePictureController
+                                            //                 .text)
+                                            //         : AssetImage(
+                                            //                 'images/background.gif')
+                                            //             as ImageProvider,
                                           ),
                                         ),
                                       ),
@@ -520,12 +493,13 @@ class _addChildState extends State<addChild> {
                             height: height * 0.1,
                             width: width,
                             decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 230, 230, 230),
+                              color: Color.fromARGB(255, 255, 255, 255),
                               borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(35),
-                                  topRight: Radius.circular(35),
-                                  bottomLeft: Radius.circular(35),
-                                  bottomRight: Radius.circular(35)),
+                                topLeft: Radius.circular(35),
+                                topRight: Radius.circular(35),
+                                bottomLeft: Radius.circular(35),
+                                bottomRight: Radius.circular(35),
+                              ),
                               boxShadow: [
                                 BoxShadow(
                                   color:
@@ -539,104 +513,116 @@ class _addChildState extends State<addChild> {
                             ),
                             margin: const EdgeInsets.only(
                                 left: 60, right: 60, bottom: 20),
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                final fullName = fullNameController.text;
-                                final email = emailController.text;
-                                final phoneNumber = phoneNumberController.text;
-                                final password = passwordController.text;
-                                final confirmPassword =
-                                    confirmPasswordController.text;
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment
+                                  .spaceBetween, // Added this line
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    final fullName = fullNameController.text;
+                                    final email = emailController.text;
+                                    final phoneNumber =
+                                        phoneNumberController.text;
+                                    final password = passwordController.text;
+                                    final confirmPassword =
+                                        confirmPasswordController.text;
 
-                                // Regular expression to check for a valid email format
-                                final emailRegExp = RegExp(
-                                    r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$');
+                                    // Regular expression to check for a valid email format
+                                    final emailRegExp = RegExp(
+                                        r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$');
 
-                                if (fullName.isEmpty ||
-                                    !emailRegExp.hasMatch(
-                                        email) || // Check email format
-                                    phoneNumber.isEmpty ||
-                                    password.isEmpty ||
-                                    confirmPassword.isEmpty) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                          'Please fill in all fields with valid data'),
-                                      backgroundColor: Colors.red,
-                                    ),
-                                  );
-                                  return;
-                                }
+                                    if (fullName.isEmpty ||
+                                        !emailRegExp.hasMatch(
+                                            email) || // Check email format
+                                        phoneNumber.isEmpty ||
+                                        password.isEmpty ||
+                                        confirmPassword.isEmpty) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                              'Please fill in all fields with valid data'),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      );
+                                      return;
+                                    }
 
-                                // Check if the passwords match
-                                if (password != confirmPassword) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('Passwords do not match'),
-                                      backgroundColor: Colors.red,
-                                    ),
-                                  );
-                                  return;
-                                }
+                                    // Check if the passwords match
+                                    if (password != confirmPassword) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content:
+                                              Text('Passwords do not match'),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      );
+                                      return;
+                                    }
 
-                                final response = await http.post(
-                                  Uri.parse(
+                                    final response = await http.post(
+                                      Uri.parse(
+                                          'http://192.168.1.112:3000/addChild/iyad2023@gmail.com'),
+
                                       // 'http://192.168.1.112:3000/addChild/${UserServices.getEmail()}'),
-                                      'http://192.168.1.112:3000/addChild/iyad2023@gmail.com'),
-                                  headers: {'Content-Type': 'application/json'},
-                                  body: jsonEncode({
-                                    'name': fullName,
-                                    'email': email,
-                                    'phoneNumber': phoneNumber,
-                                    'password': password,
-                                    'confirmPassword': confirmPassword,
-                                    'profilePicture': myfile != null
-                                        ? myfile?.path.split('/').last
-                                        : '',
-                                  }),
-                                );
+                                      headers: {
+                                        'Content-Type': 'application/json'
+                                      },
+                                      body: jsonEncode({
+                                        'name': fullName,
+                                        'email': email,
+                                        'phoneNumber': phoneNumber,
+                                        'password': password,
+                                        'confirmPassword': confirmPassword,
+                                        'profilePicture': myfile != null
+                                            ? myfile?.path.split('/').last
+                                            : '',
+                                      }),
+                                    );
 
-                                if (response.statusCode == 201) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('add child successful'),
-                                      backgroundColor:
-                                          Color.fromARGB(213, 46, 247, 76),
-                                    ),
-                                  );
+                                    if (response.statusCode == 201) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text('add child successful'),
+                                          backgroundColor:
+                                              Color.fromARGB(213, 46, 247, 76),
+                                        ),
+                                      );
 
-                                  // Clear the text fields
-                                  fullNameController.text = '';
-                                  emailController.text = '';
-                                  phoneNumberController.text = '';
-                                  passwordController.text = '';
-                                  confirmPasswordController.text = '';
-                                  setState(() {
-                                    myfile = null;
-                                  });
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('add child failed'),
-                                      backgroundColor: Colors.red,
+                                      // Clear the text fields
+                                      fullNameController.text = '';
+                                      emailController.text = '';
+                                      phoneNumberController.text = '';
+                                      passwordController.text = '';
+                                      confirmPasswordController.text = '';
+                                      setState(() {
+                                        myfile = null;
+                                      });
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text('add child failed'),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.white,
+                                    padding: EdgeInsets.symmetric(vertical: 15),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(90),
+                                      // side: BorderSide(
+                                      //   color:
+                                      //       Color.fromARGB(191, 158, 158, 158),
+                                      //   width: 1.5,
+                                      // ),
                                     ),
-                                  );
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.white,
-                                padding: EdgeInsets.symmetric(vertical: 15),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(90),
-                                  side: BorderSide(
-                                      color: Color.fromARGB(191, 158, 158, 158),
-                                      width: 1.5),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
+                                  ),
+                                  child: Text(
                                     'Add',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -644,8 +630,39 @@ class _addChildState extends State<addChild> {
                                       color: Color.fromARGB(255, 55, 164, 241),
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => setInterst(
+                                            email: emailController.text),
+                                      ),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.white,
+                                    padding: EdgeInsets.symmetric(vertical: 20),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(90),
+                                      // side: BorderSide(
+                                      //   color:
+                                      //       Color.fromARGB(191, 158, 158, 158),
+                                      //   width: 1.5,
+                                      // ),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'Set Interest',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: Color.fromARGB(255, 55, 164, 241),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],

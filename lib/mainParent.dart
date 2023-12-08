@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:webfront/addChild.dart';
 import 'package:webfront/addChildPage.dart';
 import 'package:webfront/parentProfile.dart';
+import 'package:webfront/showInterest.dart';
 import 'package:webfront/suggestionPage.dart';
 
 TextEditingController profilePictureController = TextEditingController();
@@ -169,10 +170,8 @@ class NavBar extends StatelessWidget {
         );
         break;
       case "Development":
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => StoriesPage()),
-        // );
+        openEmailInputDialog(context);
+
         break;
 
       case "Contact":
@@ -267,6 +266,48 @@ class NavBar extends StatelessWidget {
             Image.network("assets/menu.png", width: 26, height: 26)
         ],
       ),
+    );
+  }
+
+  Future<void> openEmailInputDialog(BuildContext context) async {
+    String enteredEmail = '';
+
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Enter Child Email:'),
+          content: TextField(
+            onChanged: (value) {
+              enteredEmail = value;
+            },
+            decoration: InputDecoration(
+              hintText: 'Enter email',
+            ),
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                print('Entered email: $enteredEmail');
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ShowInterest(email: enteredEmail),
+                  ),
+                );
+              },
+              child: Text('Submit'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Cancel'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

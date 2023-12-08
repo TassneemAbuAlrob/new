@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:webfront/OnBoardingPage.dart';
 import 'package:webfront/mainParent.dart';
 import 'package:webfront/parentProfile.dart';
-import 'package:webfront/profileOtherChild.dart';
+import 'package:webfront/profilechildrenofParent.dart';
 
 TextEditingController profilePictureController = TextEditingController();
 TextEditingController nameController = TextEditingController();
@@ -268,7 +268,7 @@ class _parentOtherChildProfileState extends State<parentOtherChildProfile> {
             SizedBox(width: 20),
             Expanded(
               flex: 7,
-              child: profileOtherChild(
+              child: profilechildrenofParent(
                 name: widget.name,
                 email: widget.email,
                 profilePicture: widget.profilePicture,
