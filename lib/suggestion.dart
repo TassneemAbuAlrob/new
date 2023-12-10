@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:webfront/services/user_services.dart';
 
 final TextEditingController suggTextController = TextEditingController();
 
@@ -237,8 +238,7 @@ class _suggestionState extends State<suggestion> {
                               ),
                               onPressed: () {
                                 submitSuggestion(
-                                    // '${UserServices.getEmail()}',
-                                    'iyad2023@gmail.com',
+                                    '${UserServices.getEmail()}',
                                     myFeedbackText,
                                     sliderValue,
                                     suggTextController.text);

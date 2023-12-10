@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:webfront/services/user_services.dart';
 
 class UserDetailsPage extends StatefulWidget {
   final User user;
@@ -57,8 +58,7 @@ class _HomePageState extends State<userList> {
 
   Future<List<User>> getUsersFromAPI() async {
     Uri uri = Uri.parse(
-        // 'http://192.168.1.112:3000/ListOfusers/${UserServices.getEmail() ?? ''}');
-        'http://192.168.1.112:3000/ListOfusers/tassiyad@gmail.com');
+        'http://192.168.1.112:3000/ListOfusers/${UserServices.getEmail() ?? ''}');
 
     var response = await http.get(uri);
     print("Follow User API Response: ${response.statusCode}");
@@ -247,8 +247,7 @@ class _HomePageState extends State<userList> {
   Future<void> followUser(User user) async {
     try {
       Uri uri = Uri.parse(
-          // 'http://192.168.1.112:3000/usersfollow/${UserServices.getEmail() ?? ''}');
-          'http://192.168.1.112:3000/usersfollow/tassiyad@gmail.com');
+          'http://192.168.1.112:3000/usersfollow/${UserServices.getEmail() ?? ''}');
 
       final response = await http.post(
         uri,
@@ -273,8 +272,7 @@ class _HomePageState extends State<userList> {
   Future<void> unfollowUser(User user) async {
     try {
       Uri uri = Uri.parse(
-          // 'http://192.168.1.112:3000/usersunfollow/${UserServices.getEmail() ?? ''}');
-          'http://192.168.1.112:3000/usersunfollow/tassiyad@gmail.com');
+          'http://192.168.1.112:3000/usersunfollow/${UserServices.getEmail() ?? ''}');
 
       final response = await http.delete(
         uri,

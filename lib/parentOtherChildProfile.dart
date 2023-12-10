@@ -9,6 +9,7 @@ import 'package:webfront/OnBoardingPage.dart';
 import 'package:webfront/mainParent.dart';
 import 'package:webfront/parentProfile.dart';
 import 'package:webfront/profilechildrenofParent.dart';
+import 'package:webfront/services/user_services.dart';
 
 TextEditingController profilePictureController = TextEditingController();
 TextEditingController nameController = TextEditingController();
@@ -58,8 +59,7 @@ class _parentOtherChildProfileState extends State<parentOtherChildProfile> {
   @override
   void initState() {
     super.initState();
-    // fetchUserData(UserServices.getEmail()).then((data) {
-    fetchUserData("iyad2023@gmail.com").then((data) {
+    fetchUserData(UserServices.getEmail()).then((data) {
       setState(() {
         userData = data;
         String baseUrl = "http://192.168.1.112:3000";

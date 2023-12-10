@@ -17,6 +17,7 @@ import 'package:webfront/mainChild.dart';
 import 'package:webfront/mainParent.dart';
 import 'package:webfront/parentEdit.dart';
 import 'package:webfront/parentProfile.dart';
+import 'package:webfront/services/user_services.dart';
 import 'package:webfront/yourpostList.dart';
 
 TextEditingController profilePictureController = TextEditingController();
@@ -58,8 +59,7 @@ class _parenteditprofilePageState extends State<parenteditprofilePage> {
   @override
   void initState() {
     super.initState();
-    // fetchUserData(UserServices.getEmail()).then((data) {
-    fetchUserData("iyad2023@gmail.com").then((data) {
+    fetchUserData(UserServices.getEmail()).then((data) {
       setState(() {
         userData = data;
         String baseUrl = "http://192.168.1.112:3000";

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:webfront/services/user_services.dart';
 import 'package:webfront/setInterst.dart';
 
 File? myfile;
@@ -563,9 +564,7 @@ class _addChildState extends State<addChild> {
 
                                     final response = await http.post(
                                       Uri.parse(
-                                          'http://192.168.1.112:3000/addChild/iyad2023@gmail.com'),
-
-                                      // 'http://192.168.1.112:3000/addChild/${UserServices.getEmail()}'),
+                                          'http://192.168.1.112:3000/addChild/${UserServices.getEmail()}'),
                                       headers: {
                                         'Content-Type': 'application/json'
                                       },

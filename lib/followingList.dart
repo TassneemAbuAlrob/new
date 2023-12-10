@@ -9,6 +9,7 @@ import 'package:http_parser/http_parser.dart' as http;
 import 'package:http/http.dart' as http;
 import 'package:webfront/profileOtherChild.dart';
 import 'package:webfront/profileOtherChildpage.dart';
+import 'package:webfront/services/user_services.dart';
 
 class rainbowIcon extends StatelessWidget {
   @override
@@ -49,8 +50,7 @@ class _followingListState extends State<followingList> {
   @override
   void initState() {
     super.initState();
-    // fetchFollowers(UserServices.getEmail());
-    fetchFollowers("tassiyad@gmail.com");
+    fetchFollowers(UserServices.getEmail());
   }
 
   @override

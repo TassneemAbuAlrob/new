@@ -16,6 +16,7 @@ import 'package:webfront/followerListPage.dart';
 import 'package:webfront/followersList.dart';
 import 'package:webfront/followingList.dart';
 import 'package:webfront/mainChild.dart';
+import 'package:webfront/services/user_services.dart';
 import 'package:webfront/yourpostList.dart';
 
 TextEditingController profilePictureController = TextEditingController();
@@ -57,8 +58,7 @@ class _followingListPageState extends State<followingListPage> {
   @override
   void initState() {
     super.initState();
-    // fetchUserData(UserServices.getEmail()).then((data) {
-    fetchUserData("tassiyad@gmail.com").then((data) {
+    fetchUserData(UserServices.getEmail()).then((data) {
       setState(() {
         userData = data;
         String baseUrl = "http://192.168.1.112:3000";

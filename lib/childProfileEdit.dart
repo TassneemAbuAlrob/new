@@ -12,6 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
 import 'package:webfront/childProfile.dart';
+import 'package:webfront/services/user_services.dart';
 
 TextEditingController nameController = TextEditingController();
 TextEditingController emailController = TextEditingController();
@@ -97,8 +98,7 @@ class _childProfileEditState extends State<childProfileEdit> {
   @override
   void initState() {
     super.initState();
-    // fetchUserData(UserServices.getEmail()).then((data) {
-    fetchUserData("tassiyad@gmail.com").then((data) {
+    fetchUserData(UserServices.getEmail()).then((data) {
       setState(() {
         userData = data;
         String baseUrl = "http://192.168.1.112:3000";

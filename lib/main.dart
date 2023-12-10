@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:webfront/Signup.dart';
-import 'package:webfront/childProfile.dart';
-import 'package:webfront/mainChild.dart';
-import 'package:webfront/mainParent.dart';
+
+import 'package:webfront/screens/welcome/welcome_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'log',
-      home: mainParent(),
+      home: welcomeScreen(),
     );
   }
 }

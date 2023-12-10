@@ -6,6 +6,7 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:http/http.dart' as http;
 import 'package:webfront/mainParent.dart';
 import 'package:webfront/parentProfile.dart';
+import 'package:webfront/sumScore.dart';
 
 class ShowInterest extends StatefulWidget {
   final String email;
@@ -191,6 +192,43 @@ class _ShowInterestState extends State<ShowInterest> {
             ),
           ),
         ),
+      ),
+      bottomNavigationBar: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: const Color.fromARGB(255, 239, 151, 180),
+              onPrimary: Colors.white,
+              fixedSize: Size(300.0, 50.0),
+            ),
+            onPressed: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => mainParent()),
+              );
+            },
+            child: Text("Back"),
+          ),
+          SizedBox(
+            width: 200,
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: const Color.fromARGB(255, 239, 151, 180),
+              onPrimary: Colors.white,
+              fixedSize: Size(300.0, 50.0),
+            ),
+            onPressed: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ScoreTable(email: widget.email)),
+              );
+            },
+            child: Text("Next"),
+          ),
+        ],
       ),
     );
   }

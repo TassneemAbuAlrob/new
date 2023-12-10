@@ -8,6 +8,7 @@ import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as http;
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:webfront/services/user_services.dart';
 
 class childPost extends StatefulWidget {
   @override
@@ -57,8 +58,7 @@ class _childPostState extends State<childPost> {
   @override
   void initState() {
     super.initState();
-    // fetchUserData(UserServices.getEmail()).then((data) {
-    fetchUserData("tassiyad@gmail.com").then((data) {
+    fetchUserData(UserServices.getEmail()).then((data) {
       setState(() {
         userData = data;
         String baseUrl = "http://192.168.1.112:3000";
@@ -276,8 +276,7 @@ class _childPostState extends State<childPost> {
                             });
 
                             Response response = await dio.post(
-                                // "http://192.168.1.112:3000/addPost/${UserServices.getEmail() ?? ''}",
-                                "http://192.168.1.112:3000/addPost/tassiyad@gmail.com",
+                                "http://192.168.1.112:3000/addPost/${UserServices.getEmail() ?? ''}",
                                 data: formData,
                                 options: Options(headers: {
                                   "accept": "*/*",
@@ -310,8 +309,7 @@ class _childPostState extends State<childPost> {
                             });
 
                             Response response = await dio.post(
-                                // "http://192.168.1.112:3000/addPost/${UserServices.getEmail() ?? ''}",
-                                "http://192.168.1.112:3000/addPost/tassiyad@gmail.com",
+                                "http://192.168.1.112:3000/addPost/${UserServices.getEmail() ?? ''}",
                                 data: formData,
                                 options: Options(headers: {
                                   "accept": "*/*",

@@ -5,6 +5,8 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:webfront/childProfile.dart';
+import 'package:webfront/game.dart';
+import 'package:webfront/services/user_services.dart';
 import 'package:webfront/userList.dart';
 
 TextEditingController profilePictureController = TextEditingController();
@@ -38,8 +40,7 @@ class _mainChildState extends State<mainChild> {
   @override
   void initState() {
     super.initState();
-    // fetchUserData(UserServices.getEmail()).then((data) {
-    fetchUserData("tassiyad@gmail.com").then((data) {
+    fetchUserData(UserServices.getEmail()).then((data) {
       setState(() {
         userData = data;
         String baseUrl = "http://192.168.1.112:3000";
@@ -168,10 +169,10 @@ class NavBar extends StatelessWidget {
         // );
         break;
       case "Games":
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => StoriesPage()),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AnimalGame()),
+        );
         break;
       case "Discover":
         Navigator.push(

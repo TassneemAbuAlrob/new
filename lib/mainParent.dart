@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:webfront/addChild.dart';
 import 'package:webfront/addChildPage.dart';
+import 'package:webfront/contactWithAdmin.dart';
 import 'package:webfront/parentProfile.dart';
+import 'package:webfront/services/user_services.dart';
 import 'package:webfront/showInterest.dart';
 import 'package:webfront/suggestionPage.dart';
 
@@ -41,8 +43,7 @@ class _mainParentState extends State<mainParent> {
   @override
   void initState() {
     super.initState();
-    // fetchUserData(UserServices.getEmail()).then((data) {
-    fetchUserData("iyad2023@gmail.com").then((data) {
+    fetchUserData(UserServices.getEmail()).then((data) {
       setState(() {
         userData = data;
         String baseUrl = "http://192.168.1.112:3000";
@@ -175,10 +176,10 @@ class NavBar extends StatelessWidget {
         break;
 
       case "Contact":
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => StoriesPage()),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => contactWithAdmin()),
+        );
         break;
     }
   }
@@ -262,8 +263,6 @@ class NavBar extends StatelessWidget {
                 ),
               ],
             )
-          else
-            Image.network("assets/menu.png", width: 26, height: 26)
         ],
       ),
     );
@@ -349,12 +348,6 @@ class SendBtn extends StatelessWidget {
                   SizedBox(
                     width: ResponsiveLayout.isSmallScreen(context) ? 4 : 8,
                   ),
-                  Image.network(
-                    "assets/sent.png",
-                    color: Colors.white,
-                    width: ResponsiveLayout.isSmallScreen(context) ? 12 : 20,
-                    height: ResponsiveLayout.isSmallScreen(context) ? 12 : 20,
-                  )
                 ],
               ),
             ),

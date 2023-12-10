@@ -54,6 +54,7 @@ dependencies:
   sidebarx: ^0.16.3
   http_parser: ^4.0.2
   percent_indicator: ^4.2.3
+  url_launcher: ^6.2.1
   flutter:
     sdk: flutter
 
@@ -121,6 +122,13 @@ flutter:
     - images/homeicon.jpg
     - images/avatar.jpg
     - images/parenthome.png
+    - android/icons/log1.svg
+    - android/icons/welcome.svg
+    - images/appleIcon.png
+    - images/bananaIcon.png
+    - images/grapIcon.png
+    - images/orangeIcon.png
+    - images/melonIcon.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

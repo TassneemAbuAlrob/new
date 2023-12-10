@@ -10,6 +10,7 @@ import 'package:webfront/addChild.dart';
 import 'package:webfront/mainParent.dart';
 import 'package:webfront/parentProfile.dart';
 import 'package:webfront/profileOtherChild.dart';
+import 'package:webfront/services/user_services.dart';
 import 'package:webfront/suggestion.dart';
 
 TextEditingController profilePictureController = TextEditingController();
@@ -49,8 +50,7 @@ class _addChildPageState extends State<addChildPage> {
   @override
   void initState() {
     super.initState();
-    // fetchUserData(UserServices.getEmail()).then((data) {
-    fetchUserData("iyad2023@gmail.com").then((data) {
+    fetchUserData(UserServices.getEmail()).then((data) {
       setState(() {
         userData = data;
         String baseUrl = "http://192.168.1.112:3000";

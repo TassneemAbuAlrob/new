@@ -3,12 +3,12 @@ import 'dart:io';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-// import 'package:finalfrontproject/services/user_services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http_parser/http_parser.dart' as http;
 import 'package:http/http.dart' as http;
+import 'package:webfront/services/user_services.dart';
 
 TextEditingController profilePictureController = TextEditingController();
 TextEditingController nameController = TextEditingController();
@@ -30,8 +30,7 @@ class _yourpostListState extends State<yourpostList> {
   @override
   void initState() {
     super.initState();
-    // fetchUserData(UserServices.getEmail()).then((data) {
-    fetchUserData("tassiyad@gmail.com").then((data) {
+    fetchUserData(UserServices.getEmail()).then((data) {
       setState(() {
         userData = data;
         String baseUrl = "http://192.168.1.112:3000";
@@ -46,8 +45,7 @@ class _yourpostListState extends State<yourpostList> {
     });
 
 // Fetch posts for the specific email
-    // fetchPosts(UserServices.getEmail()).then((data) {
-    fetchPosts("tassiyad@gmail.com").then((data) {
+    fetchPosts(UserServices.getEmail()).then((data) {
       setState(() {
         posts = data != null ? List<Map<String, dynamic>>.from(data) : [];
         // After fetching posts, fetch and update the like and comment counts for each post

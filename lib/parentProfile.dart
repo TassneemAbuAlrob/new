@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:webfront/mainParent.dart';
 import 'package:webfront/parentOtherChildProfile.dart';
 import 'package:webfront/parenteditprofilePage.dart';
+import 'package:webfront/services/user_services.dart';
 
 TextEditingController profilePictureController = TextEditingController();
 TextEditingController nameController = TextEditingController();
@@ -54,8 +55,7 @@ class _parentProfileState extends State<parentProfile> {
   void initState() {
     super.initState();
 
-    // fetchUserData(UserServices.getEmail()).then((data) {
-    fetchUserData("iyad2023@gmail.com").then((data) {
+    fetchUserData(UserServices.getEmail()).then((data) {
       setState(() {
         userData = data;
         String baseUrl = "http://192.168.1.112:3000";
@@ -68,16 +68,14 @@ class _parentProfileState extends State<parentProfile> {
             userData.containsKey('profilePicture') ? imageUrl : '';
       });
     });
-    // fetchChildrenData(UserServices.getEmail());
-    fetchChildrenData('iyad2023@gmail.com');
+    fetchChildrenData(UserServices.getEmail());
   }
 
 //number of children
   Future<int> getChildCount() async {
     final response = await http.get(
       Uri.parse(
-          // 'http://192.168.1.112:3000/countChildUsers/${UserServices.getEmail()}'),
-          'http://192.168.1.112:3000/countChildUsers/iyad2023@gmail.com'),
+          'http://192.168.1.112:3000/countChildUsers/${UserServices.getEmail()}'),
     );
 
     if (response.statusCode == 200) {
